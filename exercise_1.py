@@ -3,6 +3,7 @@ import tushare as ts
 import pandas as pd
 from datetime import datetime, time, date, timedelta
 import matplotlib.pyplot as plt
+#pd.options.mode.chained_assignment = None
 
 EXCEL_FILE = r'C:\PythonProj\ML_Study\600690_one_year.xlsx'
 
@@ -17,28 +18,33 @@ def fetch_data():
 
 
 def display_trend(data, min, max):
+    # plt.figure(1)
+    # plt.plot(data.index, data['close'])
+    # print(type(data.index))
+    # plt.xlabel('Date')
+    # plt.ylabel('Price')
+    # plt.ylim(min - 1, max + 1)
+    # plt.title('History of 600690')
+
     plt.figure(1)
-    plt.plot(data.index, data['close'])
-    print(type(data.index))
-    plt.xlabel('Date')
+    data.loc[:, 'dayNo'] = [t.dayofyear for t in data.index]
+    df_2016 = data[[t.year == 2016 for t in data.index]]
+    plt.plot(df_2016.dayNo, df_2016.close, label='2016')
+
+    df_2017 = data[[t.year == 2017 for t in data.index]]
+    plt.plot(df_2017.dayNo, df_2017.close, label='2017')
+
+    df_2018 = data[[t.year == 2018 for t in data.index]]
+    plt.plot(df_2018.dayNo, df_2018.close, label='2018')
+
+    df_2019 = data[[t.year == 2019 for t in data.index]]
+    plt.plot(df_2019.dayNo, df_2019.close, label='2019')
+
+    plt.xlabel('Day of Year')
     plt.ylabel('Price')
     plt.ylim(min - 1, max + 1)
     plt.title('History of 600690')
-
-    plt.figure(2)
-
-    df_2016 = data[[t.year == '2016' for t in data.index]]
-    plt.plot(df_2016.index, df_2016.close)
-
-    df_2017 = data[[t.year == '2017' for t in data.index]]
-    plt.plot(df_2017.index, df_2017.close)
-
-    df_2018 = data[[t.year == '2018' for t in data.index]]
-    plt.plot(df_2018.index, df_2018.close)
-
-    df_2019 = data[[t.year == '2019' for t in data.index]]
-    plt.plot(df_2019.index, df_2019.close)
-
+    plt.legend(loc='upper right', fontsize='x-small')
     plt.show()
 
 
