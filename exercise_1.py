@@ -38,15 +38,15 @@ def display_trend(data, min, max):
     df_2017 = data[[t.year == 2017 for t in data.index]]
     max_index = df_2017['close'].values.argmax()
     min_index = df_2017['close'].values.argmin()
-    #max_str = '[' + str(df_2017['dayNo'][max_index]) + ', ' + str(df_2017['close'][max_index]) + ']'
-    #min_str = '[' + str(df_2017['dayNo'][min_index]) + ', ' + str(df_2017['close'][min_index]) + ']'
-    print(df_2017[1])
-    #max_str = '[' + df_2017[max_index].index.strftime('%Y-%m-%d').values[0] + ', ' + str(df_2017['close'][max_index]) + ']'
-    #min_str = '[' + df_2017[min_index].index.strftime('%Y-%m-%d').values[0] + ', ' + str(df_2017['close'][min_index]) + ']'
-    #print(max_str)
-    #print(min_str)
-    #plt.annotate(max_str, xy=(df_2017['dayNo'][max_index], df_2017['close'][max_index]))
-    #plt.annotate(min_str, xy=(df_2017['dayNo'][min_index], df_2017['close'][min_index]))
+
+    max_str = '[' + df_2017.index.strftime('%Y-%m-%d').values[max_index] + ', ' + str(df_2017['close'][max_index]) + ']'
+    min_str = '[' + df_2017.index.strftime('%Y-%m-%d').values[min_index] + ', ' + str(df_2017['close'][min_index]) + ']'
+
+    plt.plot(df_2017['dayNo'][max_index], df_2017['close'][max_index], 'ks')
+    plt.plot(df_2017['dayNo'][min_index], df_2017['close'][min_index], 'ks')
+
+    plt.annotate(max_str, xy=(df_2017['dayNo'][max_index], df_2017['close'][max_index]))
+    plt.annotate(min_str, xy=(df_2017['dayNo'][min_index], df_2017['close'][min_index]))
     plt.plot(df_2017.dayNo, df_2017.close, label='2017')
 
     df_2018 = data[[t.year == 2018 for t in data.index]]
@@ -66,7 +66,7 @@ def display_trend(data, min, max):
     plt.ylim(min - 1, max + 1)
     plt.title('History of 600690')
     plt.legend(loc='upper right', fontsize='x-small')
-    #plt.show()
+    plt.show()
 
 
 def display(data, min, max):
